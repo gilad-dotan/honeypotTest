@@ -2,6 +2,7 @@ import socket
 import sys
 from login import *
 from variables import *
+from fileSystem import *
 
 def init_server():
     HOST = ''
@@ -31,6 +32,7 @@ def init_server():
     login(conn, Username, Password, NumOfLoginTries)
 
     # going to the "system"
+    loadFiles(conn, fileSystem)
 
 if __name__ == "__main__":
     init_server()

@@ -1,3 +1,19 @@
+def loginGui(soc):
+    while True:
+        # entering the username
+        print(soc.recv(1024).decode())  # receive response
+        soc.sendall(input('').encode())
+
+        # entering the password
+        print(soc.recv(1024).decode())  # receive response
+        soc.sendall(input('').encode())
+
+        data = soc.recv(1024).decode()  # receive response
+        print(data)  # show in terminal
+        if data == "login successful":
+            print("proceeding to system control")
+            return 1
+
 def login(soc, username, password):
     #entering the username
     data = soc.recv(1024).decode()  # receive response

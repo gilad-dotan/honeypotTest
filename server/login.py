@@ -48,6 +48,7 @@ def login(soc, _username, _password, limitTries):
     if username == _username and password == _password:
         soc.sendall("login successful".encode())
         print("successful login")
+        return 1
     else:
         soc.sendall("login failed".encode())
         print("unsuccessful login")
