@@ -1,4 +1,4 @@
-bruteForceLoginCombination = True
+bruteForceLoginCombination = False
 
 #[(username, password)]
 loginCombinations = [("admin", "admin"),

@@ -32,7 +32,7 @@ def init_server():
     login(conn, Username, Password, NumOfLoginTries)
 
     # going to the "system"
-    loadFiles(conn, fileSystem)
+    loadFiles(conn, fileSystem, blockAdministorPermissions)
 
 if __name__ == "__main__":
     init_server()

@@ -12,8 +12,10 @@ fileSystem = ["root", {"isDirectory" : True, "isAdministorPrivilage" : False, "i
                     ["pic2", {"isDirectory" : False, "isAdministorPrivilage" : False, "isAdminRestricted" : False}, "456"]],
                 ["System", {"isDirectory" : True, "isAdministorPrivilage" : False, "isAdminRestricted" : False},
                     ["Properties", {"isDirectory" : True, "isAdministorPrivilage" : False, "isAdminRestricted" : False},
-                        ["hashed_passowords", {"isDirectory" : True, "isAdministorPrivilage" : False, "isAdminRestricted" : True},
+                        ["hashed_passwords", {"isDirectory" : True, "isAdministorPrivilage" : False, "isAdminRestricted" : True},
                             ["hashedPass1", {"isDirectory" : False, "isAdministorPrivilage" : False, "isAdminRestricted" : True}, "abc"],
                             ["hashedPass2", {"isDirectory" : False, "isAdministorPrivilage" : False, "isAdminRestricted" : True}, "def"]],
                         ["SystemPrograms", {"isDirectory" : True, "isAdministorPrivilage" : False, "isAdminRestricted" : True},
                             ["notepad", {"isDirectory" : True, "isAdministorPrivilage" : True, "isAdminRestricted" : False}]]]]]
+
+blockAdministorPermissions = True
