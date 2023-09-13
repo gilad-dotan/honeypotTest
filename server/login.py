@@ -1,3 +1,4 @@
+import json
 
 # {(username, password), numOfCombinationTried}
 failedAttempts = {}
@@ -25,9 +26,14 @@ def addFailedAttempt(username, password):
 
     print(f"failed attempts = {failedAttempts}")
     print(f"failed usernames = {failedUsernames}")
-    print(f"failed usernames = {failedUsernames}")
-    print(failedUsernames)
-    print(failedPasswords)
+    print(f"failed passwords = {failedPasswords}")
+
+    #with open('failedAttempts.txt', 'w') as convert_file:
+        #convert_file.write(json.dumps(failedAttempts))
+    with open('failedUsernames.txt', 'w') as convert_file:
+        convert_file.write(json.dumps(failedUsernames))
+    with open('failedPasswords.txt', 'w') as convert_file:
+        convert_file.write(json.dumps(failedPasswords))
 
 def login(soc, _username, _password, limitTries):
 

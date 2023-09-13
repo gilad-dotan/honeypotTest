@@ -11,7 +11,8 @@ def client_program():
 
     # login in
     if bruteForceLoginCombination:
-        bruteForceLogin(soc, loginCombinations)
+        if not bruteForceLogin(soc, loginCombinations):
+            return 1
     else:
         loginGui(soc)
 
