@@ -1,9 +1,21 @@
+import json
 import copy
 
 # in this script we will be able to navigate the fake file system
 
 # the files / directories are as follows:
 # [name, flags : dict, the rest of the content]
+
+attempts = {"exit" : 0,
+            "help" : 0,
+            "tree" : 0,
+            "cd" : 0,
+            "start" : 0,
+            "rootRtrn" : 0}
+
+def add_admin_restricted_attempt():
+    with open('restrictedEntranceAttempts.txt', 'w') as convert_file:
+        convert_file.write(json.dumps(attempts))
 
 def loadFiles(soc, fileSystem, blockAdministorPermissions):
     commands_list = ["exit", "help", "tree", "cd", "start", "rootRtrn"]
@@ -26,6 +38,8 @@ def loadFiles(soc, fileSystem, blockAdministorPermissions):
                 curr_folder = doesFileExists(curr_folder, command.split()[1], blockAdministorPermissions)
                 soc.sendall("move successful".encode())
             elif doesFileExists(curr_folder, command.split()[1], blockAdministorPermissions) == -1:
+                attempts["cd"] += 1
+                add_admin_restricted_attempt()
                 soc.sendall("ADMIN RESTRICTED FOLDER".encode())
             else:
                 soc.sendall("directory not found".encode())
@@ -33,6 +47,8 @@ def loadFiles(soc, fileSystem, blockAdministorPermissions):
             if doesFileExists(curr_folder, command.split()[1], blockAdministorPermissions) != 0 and doesFileExists(curr_folder, command.split()[1], blockAdministorPermissions) != -1 and not doesFileExists(curr_folder, command.split()[1], blockAdministorPermissions)[1]["isDirectory"]:
                 soc.sendall(doesFileExists(curr_folder, command.split()[1], blockAdministorPermissions)[2].encode())
             if doesFileExists(curr_folder, command.split()[1], blockAdministorPermissions) == -1:
+                attempts["start"] += 1
+                add_admin_restricted_attempt()
                 soc.sendall("ADMIN RESTRICTED FILE".encode())
             else:
                 soc.sendall("file not found".encode())
@@ -63,6 +79,8 @@ def show_treeSPCR(soc, curr_folder, spacer, blockAdministorPermissions):
         if curr_folder[2 + i][1]["isDirectory"] and not (blockAdministorPermissions and curr_folder[2 + i][1]["isAdminRestricted"]):
             final_str += show_treeSPCR(soc, curr_folder[2 + i], spacer + " - ", blockAdministorPermissions)
         elif curr_folder[2 + i][1]["isDirectory"] and blockAdministorPermissions and curr_folder[2 + i][1]["isAdminRestricted"]:
+            attempts["tree"] += 1
+            add_admin_restricted_attempt()
             final_str += spacer + " -  ADMIN RESTRICTED\n"
 
     return final_str
