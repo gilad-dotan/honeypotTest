@@ -19,6 +19,7 @@ def client_program():
     while True:
         print(soc.recv(1024).decode())
         soc.sendall(input('').encode())
+        print(soc.recv(1024).decode())
 
 
 if __name__ == '__main__':

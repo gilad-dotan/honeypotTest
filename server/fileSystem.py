@@ -20,10 +20,11 @@ def loadFiles(soc, fileSystem):
         elif command == "help":
             soc.sendall(", ".join(commands_list).encode())
         elif command == "tree":
-            show_tree(curr_folder)
+            soc.sendall(show_tree(soc, curr_folder).encode())
         elif command.split()[0] == "cd":
             if doesFileExists(curr_folder, command.split()[1]) != 0 and doesFileExists(curr_folder, command.split()[1])[1]["isDirectory"]:
                 curr_folder = doesFileExists(curr_folder, command.split()[1])
+                soc.sendall("move successful".encode())
             else:
                 soc.sendall("directory not found".encode())
         elif command.split()[0] == "start":
@@ -33,6 +34,9 @@ def loadFiles(soc, fileSystem):
                 soc.sendall("file not found".encode())
         elif command == "rootRtrn":
             curr_folder = copy.deepcopy(fileSystem)
+            soc.sendall("moved back to root".encode())
+        else:
+            soc.sendall("command not found, type 'help' for help".encode())
 
 # returns the file / folder if found, 0 if not
 def doesFileExists(curr_folder, filename):
@@ -42,12 +46,14 @@ def doesFileExists(curr_folder, filename):
 
     return 0;
 
-def show_tree(curr_folder):
-    print(curr_folder[0])
-    show_treeSPCR(curr_folder, ' - ')
-def show_treeSPCR(curr_folder, spacer):
+def show_tree(soc, curr_folder):
+    return curr_folder[0] + "\n" + show_treeSPCR(soc, curr_folder, ' - ')
+def show_treeSPCR(soc, curr_folder, spacer):
+    final_str = ""
     for i in range(len(curr_folder) - 2):
         # printing out the files / directories names
-        print(spacer, curr_folder[2 + i][0])
+        final_str += spacer + " " + curr_folder[2 + i][0] + "\n"
         if curr_folder[2 + i][1]["isDirectory"]:
-            show_treeSPCR(curr_folder[2 + i], spacer + " - ")
+            final_str += show_treeSPCR(soc, curr_folder[2 + i], spacer + " - ")
+
+    return final_str
