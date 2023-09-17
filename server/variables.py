@@ -1,7 +1,7 @@
 # login information
 usernames = ["Test", "Admin"]
 passwords = ["Test", "Admin123"]
-priviligace = [False, True]
+priviligace = [True, False]
 NumOfLoginTries = 5
 
 # file system
