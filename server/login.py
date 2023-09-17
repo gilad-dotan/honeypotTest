@@ -35,7 +35,7 @@ def addFailedAttempt(username, password):
     with open('failedPasswords.txt', 'w') as convert_file:
         convert_file.write(json.dumps(failedPasswords))
 
-def login(soc, _username, _password, limitTries):
+def login(soc, _username, _password, priv, limitTries):
 
     soc.sendall("please enter you username: ".encode())
     username = soc.recv(1024).decode()
@@ -49,14 +49,14 @@ def login(soc, _username, _password, limitTries):
         soc.sendall("login failed".encode())
         print("unsuccessful login (password cracking)")
         addFailedAttempt(username, password)
-        login(soc, _username, _password, limitTries)
+        return login(soc, _username, _password, priv, limitTries)
 
-    if username == _username and password == _password:
+    if username in _username and _password[_username.index(username)] == password:
         soc.sendall("login successful".encode())
         print("successful login")
-        return 1
+        return priv[_username.index(username)]
     else:
         soc.sendall("login failed".encode())
         print("unsuccessful login")
         addFailedAttempt(username, password)
-        login(soc, _username, _password, limitTries-1)
+        return login(soc, _username, _password, priv, limitTries-1)

@@ -29,10 +29,11 @@ def init_server():
     print('# Connected to ' + addr[0] + ':' + str(addr[1]))
 
     # going to the login
-    login(conn, Username, Password, NumOfLoginTries)
+    priv = login(conn, usernames, passwords, priviligace, NumOfLoginTries)
+    print("priv =", priv)
 
     # going to the "system"
-    loadFiles(conn, fileSystem, blockAdministorPermissions)
+    loadFiles(conn, fileSystem, priv)
 
 if __name__ == "__main__":
     init_server()

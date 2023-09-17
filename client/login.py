@@ -32,10 +32,12 @@ def login(soc, username, password):
 
 def bruteForceLogin(soc, combinations):
     for comb in combinations:
+        print(f"trying: username - {comb[0]}, password - {comb[1]}")
         res = login(soc, comb[0], comb[1])
 
         if res == 1:
             print(f"username and password found! username = {comb[0]}, password = {comb[1]}")
-            return
+            return True
 
     print("no login combination found :(")
+    return False
